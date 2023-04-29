@@ -29,7 +29,7 @@ export default function MyCarousel() {
 
   useMount((params) => {
     wyyService.get('/banner').then((response) => {
-      console.log("成功了", response.data);
+      // console.log("成功了", response.data);
       setState(response.data);
 
     }, (error) => {
@@ -38,7 +38,7 @@ export default function MyCarousel() {
   })
 
   useUpdateEffect((params) => {
-    console.log("组件挂载完成");
+    // console.log("组件挂载完成");
     let divArray = document.querySelectorAll('.ad-image');
     console.log(divArray[1].querySelector('h3').innerText);
     for (let i = 0; i < 8; i++) {

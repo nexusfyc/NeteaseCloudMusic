@@ -4,11 +4,15 @@
     .left-arrow {
         width: 50px;
         height: 80px;
+        text-align: center;
         line-height: 80px;
         position: absolute;
         left: -50px;
         top: 50%;
         transform: translateY(-50%);
+        &:hover {
+            background-color: rgba(132, 132, 132, 0.5);
+        }
         .left {
             color: black;
             font-size: 30px;
@@ -22,7 +26,10 @@
         left: 730px;
         top: 50%;
         transform: translateY(-50%);
-        
+        text-align: center;
+        &:hover {
+            background-color: rgba(132, 132, 132, 0.5);
+        }
         .right {
             color: black;
             font-size: 30px;
@@ -33,14 +40,59 @@
         width: 984px;
         height: 270px;
         margin: 0 auto;
-        background-color: bisque;
+        
+        background-color: rgb(239, 239, 240);
+        background-image: url('/public/photo/download.png');
+        background-size: 254px;
+        background-position: -30px -30px;
         .mycarousel {
             width: 730px;
             background-color: red;
         }
         .login-area {
             width: 254px;
-            background-color: black;
+            position: relative;
+            left: 730px;
+            top: -60px;
+            text-align: center;
+        }
+    }
+
+    .g-wrap {
+        width: 984px;
+        height: 1425px;
+        background-color: antiquewhite;
+        margin: 0 auto;
+        display: flex;
+        .left {
+            width: 729px;
+            height: 1425px;
+            background-color: aquamarine;
+            .left-menu {
+                display: flex;
+                justify-content:space-around
+            }
+            .hot-recommend {
+                width: 729px;
+                height: 526px;
+                background-color: cadetblue;
+                display: flex;
+                justify-content: space-around;
+                flex-wrap: wrap;
+                align-items: center;
+                align-content: space-around;
+                div {
+                    width: 140px;
+                    height: 204px;
+                    background-color: blueviolet;
+                }
+            }
+        }
+
+        .right {
+            width: 255px;
+            height: 1425px;
+            background-color: beige;
         }
     }
 }
