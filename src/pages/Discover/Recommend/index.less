@@ -84,7 +84,8 @@
                 div {
                     width: 140px;
                     height: 204px;
-                    background-color: blueviolet;
+                    
+
                 }
             }
         }
@@ -93,6 +94,44 @@
             width: 255px;
             height: 1425px;
             background-color: beige;
+            .below-login-area {
+                width: 255px;
+                height: 126px;
+                background: linear-gradient(white, rgb(189, 189, 189));
+                position: relative;
+
+                span[id='description'] {
+                    display: block;
+                    text-align: center;
+                    position: relative;
+                    top: 20px;
+                    font-size: 12px;
+                }
+                .login-button {
+                    width: 120px;
+                    position: absolute;
+                    margin-left: auto;
+                    margin-right: auto;
+                    left: 0;
+                    right: 0;
+                    bottom: 10px;
+                    &:hover {
+                        transform: translateY(-2px);
+                        box-shadow: 0px 3px 1px rgb(55, 55, 55);
+                    }
+                    
+                }
+            }
+
+            .our-singers {
+                width: 255px;
+                height: 470px;
+                background-color: cadetblue;
+                .our-singers-menu {
+                    display: flex;
+                    justify-content: space-between;
+                }
+            }
         }
     }
 }

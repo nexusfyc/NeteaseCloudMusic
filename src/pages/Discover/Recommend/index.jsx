@@ -1,4 +1,4 @@
-import React, { useState, Fragment } from 'react'
+import React, { useState, Fragment, useEffect } from 'react'
 import MyCarousel from '../../../service/MyCarousel';
 import './index.css'
 import { LeftOutlined, RightOutlined } from '@ant-design/icons';
@@ -71,6 +71,23 @@ const items = [
   }
 ];
 
+const ourSingers = [
+  {
+    label: (
+      <span>热门歌手</span>
+    ),
+    key: 'singers',
+  },
+  {
+    label: (
+      <a href="https://ant.design" target="_blank" rel="noopener noreferrer">
+        查看全部
+      </a>
+    ),
+    key: 'all',
+  }
+];
+
 
 function Recommend(props) {
   const { setInfoToRedux, hotlistReducer } = props;
@@ -101,24 +118,29 @@ function Recommend(props) {
     setInfoToRedux(action);
   }
 
-  //  组件挂载时执行，获取当前页面所有所需信息
-  useMount((params) => {
-    console.log('组件挂载');
+
+  useEffect((params) => {
     getInfo('/top/playlist?limit=10&order=hot');
     console.log(props);
-    const list = document.querySelector('.hot-recommend').getElementsByTagName('div');
-    console.log(list);
-    for (let index = 0; index < list.length; index++) {
-      list[index].style.backgroundImage = `url(${hotlistReducer.Lists[index].coverImgUrl})`;
-      list[index].style.backgroundSize = '140px';
-      list[index].style.backgroundRepeat = 'no-repeat';
-      list[index].style.fontSize = '12px';
-      list[index].style.textAlign = 'left';
-      list[index].querySelector('span').style.position = 'relative';
-      list[index].querySelector('span').style.top = '155px';
 
+  }, [])
+
+  useEffect((params) => {
+    const songList = document.querySelector('.hot-recommend');
+    for (let index = 0; index < hotlistReducer.Lists.length; index++) {
+      const divElement = document.createElement('div');
+      divElement.style.backgroundImage = `url(${hotlistReducer.Lists[index].coverImgUrl})`;
+      divElement.style.backgroundSize = '140px';
+      divElement.style.backgroundRepeat = 'no-repeat';
+      divElement.style.fontSize = '12px'
+      divElement.innerHTML = `<a href=""><span>${hotlistReducer.Lists[index].name}</span></a>`;
+      divElement.querySelector('span').style.position = 'relative';
+      divElement.querySelector('span').style.top = '160px';
+
+      songList.appendChild(divElement);
     }
-  })
+  }, [hotlistReducer.Lists.length])
+
 
 
   function toPrevious() {
@@ -159,21 +181,29 @@ function Recommend(props) {
         <div className='left'>
           <Menu className='left-menu' onClick={onClick} selectedKeys={[current]} mode="horizontal" items={items} />
           <div className='hot-recommend'>
-            <div><a href=""><span>{hotlistReducer.Lists[0].name}</span></a></div>
-            <div><a href=""><span>{hotlistReducer.Lists[1].name}</span></a></div>
-            <div><a href=""><span>{hotlistReducer.Lists[2].name}</span></a></div>
-            <div><a href=""><span>{hotlistReducer.Lists[3].name}</span></a></div>
-            <div><a href=""><span>{hotlistReducer.Lists[4].name}</span></a></div>
-            <div><a href=""><span>{hotlistReducer.Lists[5].name}</span></a></div>
-            <div><a href=""><span>{hotlistReducer.Lists[6].name}</span></a></div>
-            <div><a href=""><span>{hotlistReducer.Lists[7].name}</span></a></div>
-            <div><a href=""><span>{hotlistReducer.Lists[8].name}</span></a></div>
-            <div><a href=""><span>{hotlistReducer.Lists[9].name}</span></a></div>
-            
+            {/* <div><a href=""><span></span></a></div>
+            <div><a href=""><span></span></a></div>
+            <div><a href=""><span></span></a></div>
+            <div><a href=""><span></span></a></div>
+            <div><a href=""><span></span></a></div>
+            <div><a href=""><span></span></a></div>
+            <div><a href=""><span></span></a></div>
+            <div><a href=""><span></span></a></div>
+            <div><a href=""><span></span></a></div>
+            <div><a href=""><span></span></a></div> */}
+
           </div>
         </div>
         <div className='right'>
-
+          <div className='below-login-area'>
+            <span id='description'>登陆网抑云音乐，可以享受无限收藏的乐趣，并且无限同步到手机</span>
+            <Button className='login-button' type="primary" size={size}>
+              用户登录
+            </Button>
+          </div>
+          <div className='our-singers'>
+          <Menu className='our-singers-menu' onClick={onClick} selectedKeys={[current]} mode="horizontal" items={ourSingers} />
+          </div>
         </div>
       </div>
 
@@ -183,11 +213,11 @@ function Recommend(props) {
 
 export default connect((state) => {
   return state;
-}, 
-(dispatch, ownProps) => {
-  return {
-    setInfoToRedux: (action) => {
-      dispatch(action)
+},
+  (dispatch, ownProps) => {
+    return {
+      setInfoToRedux: (action) => {
+        dispatch(action)
+      }
     }
-  }
-})(Recommend)
+  })(Recommend)
