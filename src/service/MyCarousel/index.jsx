@@ -30,7 +30,6 @@ export default function MyCarousel() {
 
   function getImgUrl() {
      // console.log("组件挂载完成");
-     console.log('正在加载', state.banners[0]);
      let divArray = document.querySelectorAll('.ad-image');
      console.log(divArray[1].querySelector('h3').innerText);
      for (let i = 0; i < 8; i++) {

@@ -10,6 +10,15 @@ import axios from 'axios';
 import { useMount, useSetState, useUpdateEffect } from 'ahooks';
 import { connect } from 'react-redux';
 import { getHotListAction } from '../../../redux/action/action-creator'
+import { Carousel } from 'antd';
+const contentStyle = {
+  margin: 0,
+  height: '240px',
+  color: '#fff',
+  lineHeight: '240px',
+  textAlign: 'center',
+  background: '#364d79',
+};
 
 
 const items = [
@@ -64,12 +73,31 @@ const items = [
   {
     label: (
       <a href="https://ant.design" target="_blank" rel="noopener noreferrer">
-        更多
+        更多--
       </a>
     ),
     key: 'electronic',
   }
 ];
+
+const newAlbumItems = [
+  {
+    label: (
+      <a href="https://ant.design" target="_blank" rel="noopener noreferrer">
+        新碟上架
+      </a>
+    ),
+    key: 'newAlbum',
+  },
+  {
+    label: (
+      <a href="https://ant.design" target="_blank" rel="noopener noreferrer">
+        更多--
+      </a>
+    ),
+    key: 'more',
+  }
+]
 
 const ourSingers = [
   {
@@ -97,16 +125,28 @@ function Recommend(props) {
     timeout: 2000
   });
 
+  const wyyServiceGetHotSingers = axios.create({
+    baseURL: 'http://localhost:3000',
+    timeout: 2000
+  });
+
+  //  wyyService请求拦截器设置
   wyyService.interceptors.response.use((response) => {
     return response.data.playlists
   })
 
   const [size, setSize] = useState('large');
-
   const [current, setCurrent] = useState('mail');
+  const [hotSingers, setHotSingers] = useState([])
+
+  //  UI组件中的方法
   const onClick = (e) => {
     console.log('click ', e);
     setCurrent(e.key);
+  };
+
+  const onChange = (currentSlide) => {
+    console.log(currentSlide);
   };
 
 
@@ -118,13 +158,28 @@ function Recommend(props) {
     setInfoToRedux(action);
   }
 
+  async function getHotSingers(url) {
+    // let info = await wyyService.get(url);
+    try {
+      let hotArtists = await wyyServiceGetHotSingers.get(url);
+      setHotSingers(hotArtists.data.artists);
 
+
+    } catch (error) {
+      console.log('出错了', error);
+    }
+
+
+  }
+
+
+  //  获取并保存相关数据
   useEffect((params) => {
     getInfo('/top/playlist?limit=10&order=hot');
-    console.log(props);
-
+    getHotSingers('/top/artists?offset=0&limit=5')
   }, [])
 
+  //  渲染页面
   useEffect((params) => {
     const songList = document.querySelector('.hot-recommend');
     for (let index = 0; index < hotlistReducer.Lists.length; index++) {
@@ -140,6 +195,29 @@ function Recommend(props) {
       songList.appendChild(divElement);
     }
   }, [hotlistReducer.Lists.length])
+
+  useEffect((params) => {
+    const singerListElement = document.querySelector('.hot-singer-list');
+    hotSingers.map((item) => {
+      const aDiv = document.createElement('div');
+      aDiv.style.width = '210px';
+      aDiv.style.height = '62px';
+      aDiv.style.marginTop = '20px';
+      aDiv.style.marginLeft = 'auto';
+      aDiv.style.marginRight = 'auto';
+      aDiv.style.backgroundImage = `url(${item.picUrl})`;
+      aDiv.style.backgroundSize = '62px 62px';
+      aDiv.style.backgroundRepeat = 'no-repeat';
+      singerListElement.appendChild(aDiv);
+      const nameSpan = document.createElement('span');
+      nameSpan.style.display = 'block';
+      nameSpan.style.position = 'relative';
+      nameSpan.style.left = '70px';
+      nameSpan.style.top = '20px';
+      nameSpan.innerHTML = item.name;
+      aDiv.appendChild(nameSpan);
+    })
+  }, [hotSingers.length])
 
 
 
@@ -193,6 +271,26 @@ function Recommend(props) {
             <div><a href=""><span></span></a></div> */}
 
           </div>
+          <Menu className='left-menu' onClick={onClick} selectedKeys={[current]} mode="horizontal" items={newAlbumItems} />
+          <div className='new-album'>
+            <Carousel afterChange={onChange}>
+              <div>
+                <h3 style={contentStyle}>
+                  <div className='first-photo'>
+                    
+                  </div>
+                </h3>
+              </div>
+              <div>
+                <h3 style={contentStyle}>
+                <div className='second-photo'>
+                    
+                    </div>
+                </h3>
+              </div>
+              
+            </Carousel>
+          </div>
         </div>
         <div className='right'>
           <div className='below-login-area'>
@@ -202,7 +300,10 @@ function Recommend(props) {
             </Button>
           </div>
           <div className='our-singers'>
-          <Menu className='our-singers-menu' onClick={onClick} selectedKeys={[current]} mode="horizontal" items={ourSingers} />
+            <Menu className='our-singers-menu' onClick={onClick} selectedKeys={[current]} mode="horizontal" items={ourSingers} />
+            <div className='hot-singer-list'>
+              <Button type="primary" className='apply-button'>申请成为网易音乐人</Button>
+            </div>
           </div>
         </div>
       </div>
