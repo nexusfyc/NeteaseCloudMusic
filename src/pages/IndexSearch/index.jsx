@@ -208,12 +208,12 @@ const columns = [
     render: (_, record) => (
       <Space size="middle">
         {/* <a>Invite {record.name}</a> */}
-        <a onClick={() => {
+        <a href onClick={() => {
           // alert(record.key);
+          //  将单曲相关信息保存至redux
+          getPlayingMusicInfo(record.key);
           //  发送单曲id
           sendPlayMsg(record.key);
-          //  将单曲相关信息保存至redux
-          getPlayingMusicInfo(record.key)
         }}><PlayCircleOutlined /></a>
       </Space>
     ),

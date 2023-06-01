@@ -2,7 +2,7 @@ import './index.css'
 import React, { useState, useEffect } from 'react'
 import { NavLink, Routes, Route, Link, Outlet, useRoutes, useNavigate, createSearchParams } from 'react-router-dom'
 import { PlayCircleOutlined, AudioOutlined } from '@ant-design/icons'
-import { Input, Button, Modal, QRCode, Space } from 'antd';
+import { Input, Button, Modal, Slider } from 'antd';
 import routesTable from '../../routes';
 import PubSub from 'pubsub-js'
 import axios from 'axios';
@@ -74,7 +74,7 @@ export default function HeaderBar() {
   };
 
   const refreshQR = (params) => {
-    let Timestamp=new Date().getTime();
+    let Timestamp = new Date().getTime();
     getQR.get(`/login/qr/key?timestamp=${Timestamp}`).then((res) => {
       let unikey = res.data.data.unikey;
       getQR.get(`/login/qr/create?key=${unikey}&qrimg=1`).then((response) => {

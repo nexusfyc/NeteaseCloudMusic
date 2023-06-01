@@ -9,14 +9,28 @@
     justify-content: center;
     align-items: center;
 
+    .audio-element {
+        
+    }
+
+    .player-bar {
+        position: relative;
+        top: -20px;
+    }
     .control-area {
 
-        width: 150px;
+        width: 100px;
         height: 50px;
         display: flex;
         align-items: center;
         justify-content: space-between;
-
+        .play-btn {
+            width: 36px;
+            height: 36px;
+            background-image: url('../../assets/img/playbar_sprite.png');
+            background-position:0px -203px;
+            
+        }
         a {
             display: inline-block;
             width: 35px;
@@ -47,19 +61,27 @@
     }
 
     .play-area {
-        width: 550px;
+        width: 750px;
         height: 50px;
         display: flex;
         justify-content: space-around;
         align-items: center;
-
+        .player-time {
+            position: relative;
+            top: 9px;
+            left: 10px;
+        }
         .music-info {
             width: 466px;
             height: 50px;
             display: flex;
             flex-direction: column;
             justify-content: center;
-
+            p {
+                position: relative;
+                top: 5px;
+                left: 5px;
+            }
             .inner-info {
                 width: 466px;
                 height: 20px;
@@ -83,5 +105,67 @@
         background-color: rgb(127, 127, 127);
         display: inline-block;
 
+    }
+
+    .function-area {
+        width: 200px;
+        height: 50px;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        
+        .lyrics {
+            width: 25px;
+            height: 25px;
+            background-image: url('../../assets/img/playbar_sprite.png');
+            background-repeat: no-repeat;
+            background-position: 3px -53px;
+            &:hover {
+                background-position: -18px -53px;
+            }
+        }
+        .collect {
+            width: 25px;
+            height: 25px;
+            background-image: url('../../assets/img/playbar_sprite.png');
+            background-position: -90px -163px;
+            &:hover {
+                background-position: -90px -190px;
+            }
+        }
+        .share {
+            width: 25px;
+            height: 25px;
+            background-image: url('../../assets/img/playbar_sprite.png');
+            background-position: -115px -163px;
+            &:hover {
+                background-position: -115px -190px;
+            }
+        }
+        .volumn {
+            width: 25px;
+            height: 25px;
+            background-image: url('../../assets/img/playbar_sprite.png');
+            background-position: -3px -248px;
+            &:hover {
+                background-position: -33px -248px;
+            }
+            
+        }
+        .player-mode {
+            width: 25px;
+            height: 25px;
+            background-image: url('../../assets/img/playbar_sprite.png');
+            background-position: -70px -248px;
+        }
+        .player-list {
+            width: 59px;
+            height: 25px;
+            background-image: url('../../assets/img/playbar_sprite.png');
+            background-position: -42px -68px;
+            &:hover {
+                background-position: -42px -98px;
+            }
+        }
     }
 }

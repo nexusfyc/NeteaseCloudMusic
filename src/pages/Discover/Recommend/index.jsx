@@ -11,6 +11,7 @@ import { useMount, useSetState, useUpdateEffect } from 'ahooks';
 import { connect } from 'react-redux';
 import { getHotListAction } from '../../../redux/action/action-creator'
 import { Carousel } from 'antd';
+
 const contentStyle = {
   margin: 0,
   height: '240px',
